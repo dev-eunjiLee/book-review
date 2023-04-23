@@ -1,5 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
+export const CREATE_USER_INBOUND_PORT = 'CREATE_USER_INBOUND_PORT';
+
 @InputType()
 export class CreateUserInboundPortInputDto {
   @Field(() => String)
