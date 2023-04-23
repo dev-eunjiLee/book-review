@@ -1,8 +1,11 @@
-import { Field } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
-import { Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { CommonEntity } from '../../common/common.entity';
 
+@Entity()
+@InputType('UserInputType')
+@ObjectType()
 export class User extends CommonEntity {
   @Column()
   @Field(() => String)
