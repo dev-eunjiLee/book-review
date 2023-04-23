@@ -1,23 +1,14 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CommonOutputDto } from '../../common/common.output.dto';
-import { IsString } from 'class-validator';
+import { User } from '../entities/user.entity';
 
 export const CREATE_USER_INBOUND_PORT = 'CREATE_USER_INBOUND_PORT';
 
 @InputType()
-export class CreateUserInboundPortInputDto {
-  @Field(() => String)
-  @IsString()
-  nickname: string;
-
-  @Field(() => String)
-  @IsString()
-  id: string;
-
-  @Field(() => String)
-  @IsString()
-  password: string;
-}
+export class CreateUserInboundPortInputDto extends PickType<User, keyof User>(
+  User,
+  ['id', 'nickname', 'password'],
+) {}
 
 // TODO: CreateUserInboundPortOutputDto 완성
 @ObjectType()
