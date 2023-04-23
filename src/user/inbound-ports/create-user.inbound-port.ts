@@ -1,17 +1,21 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CommonOutputDto } from '../../common/common.output.dto';
+import { IsString } from 'class-validator';
 
 export const CREATE_USER_INBOUND_PORT = 'CREATE_USER_INBOUND_PORT';
 
 @InputType()
 export class CreateUserInboundPortInputDto {
   @Field(() => String)
+  @IsString()
   nickname: string;
 
   @Field(() => String)
+  @IsString()
   id: string;
 
   @Field(() => String)
+  @IsString()
   password: string;
 }
 
