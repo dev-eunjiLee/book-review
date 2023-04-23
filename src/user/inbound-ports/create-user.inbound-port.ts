@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { CommonOutputDto } from '../../common/common.output.dto';
 
 export const CREATE_USER_INBOUND_PORT = 'CREATE_USER_INBOUND_PORT';
 
@@ -16,10 +17,7 @@ export class CreateUserInboundPortInputDto {
 
 // TODO: CreateUserInboundPortOutputDto 완성
 @ObjectType()
-export class CreateUserInboundPortOutputDto {
-  @Field(() => Boolean)
-  ok: boolean;
-}
+export class CreateUserInboundPortOutputDto extends CommonOutputDto {}
 
 export interface CreateUserInboundPort {
   execute(
