@@ -6,7 +6,7 @@ import {
 export const CREATE_USER_OUTBOUND_PORT = 'CREATE_USER_OUTBOUND_PORT';
 
 export type CreateUserOutboundInputDto = CreateUserInboundPortInputDto;
-export type CreateUserOutboundOutputDto = CreateUserInboundPortOutputDto;
+export class CreateUserOutboundOutputDto extends CreateUserInboundPortOutputDto {}
 
 export interface CreateUserOutboundPort {
   execute(
