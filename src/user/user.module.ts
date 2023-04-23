@@ -5,8 +5,11 @@ import { CreateUserResolver } from './resolvers/create-user.resolver';
 import { ReadUserResolver } from './resolvers/read-user.resolver';
 import { CREATE_USER_OUTBOUND_PORT } from './oubound-port/create-user.outbound-port';
 import { CreateUserOutboundAdapter } from './outbound-adapters/create-user.outbound-adpater';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([User])],
   providers: [
     // services implemented by interfaces
     {
