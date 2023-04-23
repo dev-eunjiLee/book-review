@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 import { Column, Entity } from 'typeorm';
 import { CommonEntity } from '../../common/common.entity';
 
-@Entity()
+@Entity('User')
 @InputType('UserInputType')
 @ObjectType()
 export class User extends CommonEntity {
