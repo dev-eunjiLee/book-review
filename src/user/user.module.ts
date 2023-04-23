@@ -3,6 +3,8 @@ import { CREATE_USER_INBOUND_PORT } from './inbound-ports/create-user.inbound-po
 import { CreateUserService } from './services/create-user.service';
 import { CreateUserResolver } from './resolvers/create-user.resolver';
 import { ReadUserResolver } from './resolvers/read-user.resolver';
+import { CREATE_USER_OUTBOUND_PORT } from './oubound-port/create-user.outbound-port';
+import { CreateUserOutboundAdapter } from './outbound-adapters/create-user.outbound-adpater';
 
 @Module({
   providers: [
@@ -10,6 +12,10 @@ import { ReadUserResolver } from './resolvers/read-user.resolver';
     {
       provide: CREATE_USER_INBOUND_PORT,
       useClass: CreateUserService,
+    },
+    {
+      provide: CREATE_USER_OUTBOUND_PORT,
+      useClass: CreateUserOutboundAdapter,
     },
 
     // resolvers
