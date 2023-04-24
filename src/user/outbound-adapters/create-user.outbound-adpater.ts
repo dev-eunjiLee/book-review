@@ -27,7 +27,9 @@ export class CreateUserOutboundAdapter implements CreateUserOutboundPort {
     try {
       user = await this.userRepository.save<User>(userCreation);
     } catch (error) {
+      // TODO 로그 공통으로 셋팅할 방법 확인하기
       console.error(error);
+      // TODO Graphql에러 처리 로직 확인하기
       if (error instanceof QueryFailedError) {
         if ('code' in error) {
           const code = error.code;
