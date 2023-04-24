@@ -27,17 +27,21 @@ export class CreateUserOutboundAdapter implements CreateUserOutboundPort {
     try {
       user = await this.userRepository.save<User>(userCreation);
     } catch (error) {
+      console.error(error);
       if (error instanceof QueryFailedError) {
         if ('code' in error) {
           const code = error.code;
           if (code === 'ER_DUP_ENTRY') {
             throw new GraphQLError('Duplication');
+          } else if (code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD') {
+            // param example: 'ㅓㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍhi3333'
+            throw new GraphQLError('부정확한 필드');
           }
         }
       }
       throw new GraphQLError(error);
     }
     // TODO output 제대로 추가
-    return { ok: true };
+    return { ok: true, user };
   }
 }
