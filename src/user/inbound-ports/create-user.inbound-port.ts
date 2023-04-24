@@ -1,4 +1,4 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CommonOutputDto } from '../../common/common.output.dto';
 import { User } from '../entities/user.entity';
 
@@ -12,7 +12,10 @@ export class CreateUserInboundPortInputDto extends PickType<User, keyof User>(
 
 // TODO: CreateUserInboundPortOutputDto 완성
 @ObjectType()
-export class CreateUserInboundPortOutputDto extends CommonOutputDto {}
+export class CreateUserInboundPortOutputDto extends CommonOutputDto {
+  @Field(() => User, { nullable: true })
+  user?: User;
+}
 
 export interface CreateUserInboundPort {
   execute(
