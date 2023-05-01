@@ -48,6 +48,7 @@ import { LoggerMiddleware } from './util/LoggerMiddleware';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
+  // TODO gql 방식에는 맞지 않는 로그라 새로 구현 필요
   configure(consumer: MiddlewareConsumer): any {
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }
