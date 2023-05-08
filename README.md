@@ -1,5 +1,10 @@
 This is a backend-template for most services
 
+# 다음에 이어서 진행해야 할 내용
+| 타이틀      | 진행상황                    |
+|-----------|----------------------------|
+| 로그       | gql plugin, log 확인 후 적용 필요(노션) |
+
 # BACKEND-TEMPLATE
 ##### Period: 2023.04.23 ~ ING
 ##### Services(In Worked)
