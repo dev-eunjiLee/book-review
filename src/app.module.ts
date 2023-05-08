@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { LoggerMiddleware } from './util/LoggerMiddleware';
+import { myPlugin } from './util/logger/logPlugin';
 
 @Module({
   imports: [
@@ -18,6 +19,8 @@ import { LoggerMiddleware } from './util/LoggerMiddleware';
       autoSchemaFile: true,
       // 에러를 어느 정도 선으로 전달할지
       includeStacktraceInErrorResponses: false,
+      // * ===== 로그 ===== * //
+      plugins: [myPlugin],
     }),
     ConfigModule.forRoot({
       envFilePath: '.env.dev',
