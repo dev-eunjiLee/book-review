@@ -1,0 +1,10 @@
+GRAPHQL http://localhost:3000/graphql
+
+query {
+    readUser(
+    input: {
+    all: true
+    }) {
+    ok
+    }
+}
