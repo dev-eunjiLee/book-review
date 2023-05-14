@@ -36,6 +36,7 @@ export class LoggingInterceptor implements NestInterceptor {
           };
     };
 
+    // TODO 로그 완성 필요
     if (contextType === CONTEXT.GRAPHQL) {
     } else if (contextType === CONTEXT.HTTP) {
       const ctx = context.switchToHttp();
