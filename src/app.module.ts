@@ -7,7 +7,6 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
-import { LoggerMiddleware } from './util/LoggerMiddleware';
 import { myPlugin } from './util/logger/logPlugin';
 
 @Module({
@@ -51,9 +50,4 @@ import { myPlugin } from './util/logger/logPlugin';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule {
-  // TODO gql 방식에는 맞지 않는 로그라 새로 구현 필요
-  configure(consumer: MiddlewareConsumer): any {
-    // consumer.apply(LoggerMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}
