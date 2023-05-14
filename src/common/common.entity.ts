@@ -20,7 +20,7 @@ export class CommonEntity {
   @PrimaryGeneratedColumn()
   tableId: number;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   @DeleteDateColumn()
-  deletedAt: Date;
+  deletedAt?: Date;
 }
