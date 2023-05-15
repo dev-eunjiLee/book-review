@@ -5,6 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 const CONTEXT = {
   HTTP: 'http',
@@ -25,8 +26,8 @@ export class LoggingInterceptor implements NestInterceptor {
       type: CONTEXT_TYPE;
       content:
         | {
-            query: string;
-            input: string;
+            fieldName: string;
+            input: { [key: string]: string };
           }
         | {
             method: string;
@@ -36,8 +37,20 @@ export class LoggingInterceptor implements NestInterceptor {
           };
     };
 
-    // TODO 로그 완성 필요
     if (contextType === CONTEXT.GRAPHQL) {
+      const host = context.getArgs()[2].req.headers.host;
+      const ctx = GqlExecutionContext.create(context);
+
+      const { input } = ctx.getArgs();
+      const { fieldName } = ctx.getInfo();
+      content = {
+        host,
+        type: contextType,
+        content: {
+          fieldName,
+          input,
+        },
+      };
     } else if (contextType === CONTEXT.HTTP) {
       const ctx = context.switchToHttp();
       const host = ctx.getRequest().headers.host;
@@ -51,19 +64,21 @@ export class LoggingInterceptor implements NestInterceptor {
           query: ctx.getRequest().query,
         },
       };
-
-      console.log('hi');
     } else {
       throw Error('gql, http가 아닌 종류의 request 발생');
     }
 
+    console.log(content);
+
     return next.handle().pipe(
       tap({
-        next: (val: unknown): void => {
-          console.log('hi');
+        next: (val: unknown) => {
+          console.log('next');
+          console.log(val);
         },
-        error: (err: Error): void => {
-          console.log(err);
+        error: (val: unknown) => {
+          console.log('error');
+          console.log(val);
         },
       }),
     );
