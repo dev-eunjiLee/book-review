@@ -13,6 +13,13 @@ const CONTEXT = {
 } as const;
 export type CONTEXT_TYPE = typeof CONTEXT[keyof typeof CONTEXT];
 
+export const applyRequestId = (
+  context: GqlExecutionContext,
+  randomId: string,
+): void => {
+  context['args'][1]['input']['requestId'] = randomId;
+};
+
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(
@@ -21,9 +28,12 @@ export class LoggingInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     const contextType = context.getType() as CONTEXT_TYPE;
 
+    const randomId = Math.random().toString(36).substring(2, 10);
+
     let content: {
       host: string;
       type: CONTEXT_TYPE;
+      randomId: string;
       content:
         | {
             fieldName: string;
@@ -45,17 +55,21 @@ export class LoggingInterceptor implements NestInterceptor {
       const { fieldName } = ctx.getInfo();
       content = {
         host,
+        randomId,
         type: contextType,
         content: {
           fieldName,
           input,
         },
       };
+
+      applyRequestId(ctx, randomId);
     } else if (contextType === CONTEXT.HTTP) {
       const ctx = context.switchToHttp();
       const host = ctx.getRequest().headers.host;
       content = {
         host,
+        randomId,
         type: contextType,
         content: {
           method: ctx.getRequest().method,
