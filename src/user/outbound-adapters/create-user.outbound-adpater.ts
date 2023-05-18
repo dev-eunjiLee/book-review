@@ -8,6 +8,7 @@ import { QueryFailedError, Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GraphQLError } from 'graphql/error';
+import { CustomGraphQLError } from '../../common/common.graphql.error';
 
 @Injectable()
 export class CreateUserOutboundAdapter implements CreateUserOutboundPort {
@@ -34,16 +35,20 @@ export class CreateUserOutboundAdapter implements CreateUserOutboundPort {
         if ('code' in error) {
           const code = error.code;
           if (code === 'ER_DUP_ENTRY') {
-            throw new GraphQLError('Duplication');
+            throw new CustomGraphQLError('Duplication', param.requestId);
           } else if (code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD') {
             // param example: 'ㅓㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍhi3333'
             throw new GraphQLError('부정확한 필드');
           }
         }
       }
-      throw new GraphQLError(error);
+      throw new GraphQLError(error, {
+        extensions: {
+          requestId: param.requestId,
+        },
+      });
     }
     // TODO output 제대로 추가
-    return { ok: true, user };
+    return { ok: true, user, requestId: param.requestId };
   }
 }
