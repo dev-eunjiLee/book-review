@@ -14,6 +14,23 @@ const CONTEXT = {
 // type CONTEXT_TYPE = typeof CONTEXT['HTTP' | 'GRAPHQL']; 과 동일하다 => value를 union type으로 뽑아낸다
 export type CONTEXT_TYPE = typeof CONTEXT[keyof typeof CONTEXT];
 
+export type REQUEST_LOG_CONTENT_TYPE = {
+  host: string;
+  type: CONTEXT_TYPE;
+  randomId: string;
+  content:
+    | {
+        fieldName: string;
+        input: { [key: string]: string };
+      }
+    | {
+        method: string;
+        path: string;
+        query: { [key: string]: string };
+        body: { [key: string]: string };
+      };
+};
+
 export const applyRequestId = (
   context: GqlExecutionContext,
   randomId: string,
@@ -31,22 +48,7 @@ export class LoggingInterceptor implements NestInterceptor {
 
     const randomId = Math.random().toString(36).substring(2, 10);
 
-    let content: {
-      host: string;
-      type: CONTEXT_TYPE;
-      randomId: string;
-      content:
-        | {
-            fieldName: string;
-            input: { [key: string]: string };
-          }
-        | {
-            method: string;
-            path: string;
-            query: { [key: string]: string };
-            body: { [key: string]: string };
-          };
-    };
+    let content: REQUEST_LOG_CONTENT_TYPE;
 
     if (contextType === CONTEXT.GRAPHQL) {
       const host = context.getArgs()[2].req.headers.host;
