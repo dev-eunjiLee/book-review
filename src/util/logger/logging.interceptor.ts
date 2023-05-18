@@ -11,6 +11,7 @@ const CONTEXT = {
   HTTP: 'http',
   GRAPHQL: 'graphql',
 } as const;
+// type CONTEXT_TYPE = typeof CONTEXT['HTTP' | 'GRAPHQL']; 과 동일하다 => value를 union type으로 뽑아낸다
 export type CONTEXT_TYPE = typeof CONTEXT[keyof typeof CONTEXT];
 
 export const applyRequestId = (
