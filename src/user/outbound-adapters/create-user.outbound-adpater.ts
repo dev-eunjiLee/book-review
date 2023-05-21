@@ -35,7 +35,10 @@ export class CreateUserOutboundAdapter implements CreateUserOutboundPort {
         if ('code' in error) {
           const code = error.code;
           if (code === 'ER_DUP_ENTRY') {
-            throw new CustomGraphQLError('Duplication', param.requestId);
+            throw new CustomGraphQLError({
+              message: 'Duplication',
+              requestId: param.requestId,
+            });
           } else if (code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD') {
             // param example: 'ㅓㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍㅍhi3333'
             throw new GraphQLError('부정확한 필드');
