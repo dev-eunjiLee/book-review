@@ -66,7 +66,7 @@ export class LoggingInterceptor implements NestInterceptor {
         },
       };
 
-      applyRequestId(ctx, randomId);
+      // applyRequestId(ctx, randomId);
     } else if (contextType === CONTEXT.HTTP) {
       const ctx = context.switchToHttp();
       const host = ctx.getRequest().headers.host;
