@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import got from 'got';
 import { ConfigService } from '@nestjs/config';
-import { BOOK_FROM_NAVER_TYPE } from './types/entities/book.entity';
 import {
   ReadBookListInputDto,
   ReadBookListOutputDto,
@@ -12,19 +11,23 @@ import {
   NAVER_BOOK_SEARCH_ERROR_CODE_LIST,
 } from './types/basic/naver.book.error.type';
 import { ERROR_CODE_ENUM } from '../common/error/error.code';
+import { BOOK_FROM_NAVER_TYPE } from './types/basic/naver.book.type';
+import { NAVER_BOOK_SEARCH_API_URL } from './types/basic/token';
 
 @Injectable()
 export class BookService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    @Inject(NAVER_BOOK_SEARCH_API_URL)
+    private readonly naverBookSearchApiUrl: string,
+  ) {}
 
   async readBookList(
     param: ReadBookListInputDto,
   ): Promise<ReadBookListOutputDto> {
-    const basicUrl = `https://openapi.naver.com/v1/search/book.json`;
-
     const { keyword, pageNumber, pageSize } = param;
 
-    const url = `${basicUrl}?query=${keyword}&start=${pageNumber}&display=${pageSize}`;
+    const url = `${this.naverBookSearchApiUrl}?query=${keyword}&start=${pageNumber}&display=${pageSize}`;
 
     let searchResult: BOOK_FROM_NAVER_TYPE;
     try {
