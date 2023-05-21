@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { Book } from '../book.entity';
+import { Book } from '../entities/book.entity';
 import { Max } from 'class-validator';
 
 @InputType()

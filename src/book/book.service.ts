@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import got from 'got';
 import { ConfigService } from '@nestjs/config';
-import { BOOK_FROM_NAVER_TYPE } from './book.entity';
+import { BOOK_FROM_NAVER_TYPE } from './entities/book.entity';
 import {
   ReadBookListInputDto,
   ReadBookListOutputDto,
