@@ -38,11 +38,8 @@ export class BookService {
         },
       }).json();
     } catch (e) {
-      if (!e?.response?.body) {
-        throw new CustomGraphQLError({
-          message: e.message,
-        });
-      } else {
+      // 네이버에서 넘어온 에러인 경우 처리와 그 외 에러 구분해서 처리
+      if (e?.response?.body) {
         const errBody = JSON.parse(
           e?.response?.body,
         ) as NAVER_BOOK_SEARCH_ERROR_BODY;
@@ -52,12 +49,10 @@ export class BookService {
             message: errBody.errorMessage,
             errorCode: ERROR_CODE_ENUM.CALL_API_ERROR,
           });
-        } else {
-          throw new CustomGraphQLError({
-            message: e.message,
-          });
         }
       }
+
+      throw e;
     }
 
     return {
