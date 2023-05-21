@@ -3,7 +3,7 @@ import { BookService } from './book.service';
 import {
   ReadBookListInputDto,
   ReadBookListOutputDto,
-} from './dtos/read.book.list.dto';
+} from './types/dtos/read.book.list.dto';
 
 @Resolver()
 export class BookResolver {

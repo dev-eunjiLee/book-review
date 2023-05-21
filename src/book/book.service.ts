@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import got from 'got';
 import { ConfigService } from '@nestjs/config';
-import { BOOK_FROM_NAVER_TYPE } from './entities/book.entity';
+import { BOOK_FROM_NAVER_TYPE } from './types/entities/book.entity';
 import {
   ReadBookListInputDto,
   ReadBookListOutputDto,
-} from './dtos/read.book.list.dto';
+} from './types/dtos/read.book.list.dto';
 import { CustomGraphQLError } from '../common/common.graphql.error';
 import {
   NAVER_BOOK_SEARCH_ERROR_BODY,
   NAVER_BOOK_SEARCH_ERROR_CODE_LIST,
-} from './naver.book.type';
+} from './types/basic/naver.book.error.type';
 import { ERROR_CODE_ENUM } from '../common/error/error.code';
 
 @Injectable()
