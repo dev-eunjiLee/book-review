@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { ReviewModule } from './review/review.module';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { ReviewModule } from './review/review.module';
     // * service
     UserModule,
     ReviewModule,
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],
