@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -7,7 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
-import { myPlugin } from './util/logger/logPlugin';
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -44,6 +44,7 @@ import { myPlugin } from './util/logger/logPlugin';
     }),
     // * service
     UserModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],
