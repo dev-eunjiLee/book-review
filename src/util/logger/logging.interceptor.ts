@@ -90,11 +90,9 @@ export class LoggingInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap({
         next: (val: unknown) => {
-          console.log('next');
           console.log(val);
         },
         error: (val: unknown) => {
-          console.log('error');
           console.log(val);
         },
       }),
