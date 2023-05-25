@@ -59,7 +59,9 @@ export class BookService {
     }
 
     return {
-      ...searchResult,
+      total: searchResult.total,
+      start: searchResult.start,
+      display: searchResult.display,
       bookList: searchResult.items,
     };
   }
