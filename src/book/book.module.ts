@@ -14,5 +14,6 @@ import { NAVER_BOOK_SEARCH_API_URL } from './types/basic/token';
       useValue: 'https://openapi.naver.com/v1/search/book.json',
     },
   ],
+  exports: [BookService],
 })
 export class BookModule {}
