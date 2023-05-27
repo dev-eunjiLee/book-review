@@ -13,6 +13,7 @@ import {
 import { ERROR_CODE_ENUM } from '../common/error/error.code';
 import { BOOK_FROM_NAVER_TYPE } from './types/basic/naver.book.type';
 import { NAVER_BOOK_SEARCH_API_URL } from './types/basic/token';
+import { Book } from './types/entities/book.entity';
 
 @Injectable()
 export class BookService {
@@ -63,6 +64,21 @@ export class BookService {
       start: searchResult.start,
       display: searchResult.display,
       bookList: searchResult.items,
+    };
+  }
+
+  readBook(): Book {
+    // 테스트용으로 book 셋팅
+    return {
+      title: 'test_title',
+      link: 'test_link',
+      image: 'test_image',
+      author: 'test_author',
+      discount: 999,
+      publisher: 'test_publisher',
+      isbn: 999,
+      description: 'test_description',
+      pubdate: new Date(),
     };
   }
 }
