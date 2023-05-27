@@ -1,4 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ReviewService {}
+export class ReviewService {
+  createReview() {
+    return 'ok';
+  }
+}
