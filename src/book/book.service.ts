@@ -68,6 +68,7 @@ export class BookService {
   }
 
   readBook(): Book {
+    // TODO input받아서 실제 Book DB에서 데이터 가져오도록 수정 필요
     // 테스트용으로 book 셋팅
     return {
       title: 'test_title',
