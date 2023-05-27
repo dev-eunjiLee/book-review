@@ -12,7 +12,7 @@ const CONTEXT = {
   GRAPHQL: 'graphql',
 } as const;
 // type CONTEXT_TYPE = typeof CONTEXT['HTTP' | 'GRAPHQL']; 과 동일하다 => value를 union type으로 뽑아낸다
-export type CONTEXT_TYPE = typeof CONTEXT[keyof typeof CONTEXT];
+export type CONTEXT_TYPE = (typeof CONTEXT)[keyof typeof CONTEXT];
 
 export type REQUEST_LOG_CONTENT_TYPE = {
   host: string;
@@ -38,6 +38,25 @@ export const applyRequestId = (
   context['args'][1]['input']['requestId'] = randomId;
 };
 
+const setOutputLog = (content: any): { [key: string]: string } => {
+  let output: any;
+  if (typeof content === 'string') {
+    output = content.length > 1000 ? content.substring(0, 1000) : content;
+  } else {
+    const keys = Object.keys(content);
+
+    const output: { [key: string]: string } = {};
+
+    keys.forEach((key) => {
+      const strValue = JSON.stringify(content[key]);
+      if (strValue.length > 1000)
+        output[key] = `${strValue.substring(0, 1000)}...`;
+      else output[key] = strValue;
+    });
+    console.log(333);
+  }
+  return output;
+};
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
   intercept(
@@ -90,7 +109,8 @@ export class LoggingInterceptor implements NestInterceptor {
     return next.handle().pipe(
       tap({
         next: (val: unknown) => {
-          console.log(val);
+          console.log('output');
+          console.log(setOutputLog(val));
         },
         error: (val: unknown) => {
           console.log(val);
