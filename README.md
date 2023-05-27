@@ -18,8 +18,10 @@
 
 ##### 규칙
 
-1. resolver 및 service 네이밍
+1. 네이밍
    - CRUD인 경우 create, read, update, delete로 지정
+2. 에러 처리
+   - 실제 데이터가 있는 경우에만 데이터 날라가고 그 외는 Error를 날림
 
 ##### 프로젝트의 지향점
 
