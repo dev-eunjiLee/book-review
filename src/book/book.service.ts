@@ -14,7 +14,7 @@ import { ReadBookInputDto } from './types/dtos/read.book.dto';
 import {
   SearchBookInputDto,
   SearchBookOutputDto,
-} from './types/dtos/read.book.list.dto';
+} from './types/dtos/search.book.dto';
 
 @Injectable()
 export class BookService {
