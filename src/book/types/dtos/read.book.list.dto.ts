@@ -3,7 +3,7 @@ import { Book } from '../entities/book.entity';
 import { Max } from 'class-validator';
 
 @InputType()
-export class ReadBookListInputDto {
+export class SearchBookInputDto {
   @Field(() => String)
   keyword: string;
   @Field(() => Number, { defaultValue: 1 })
@@ -15,7 +15,7 @@ export class ReadBookListInputDto {
 }
 
 @ObjectType()
-export class ReadBookListOutputDto {
+export class SearchBookOutputDto {
   @Field(() => Number, { description: '총 검색 결과 개수' })
   total: number;
   @Field(() => Number, { description: '검색 시작 위치' })
