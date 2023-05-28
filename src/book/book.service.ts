@@ -14,6 +14,7 @@ import { ERROR_CODE_ENUM } from '../common/error/error.code';
 import { BOOK_FROM_NAVER_TYPE } from './types/basic/naver.book.type';
 import { NAVER_BOOK_SEARCH_API_URL } from './types/basic/token';
 import { Book } from './types/entities/book.entity';
+import { ReadBookInputDto } from './types/dtos/read.book.dto';
 
 @Injectable()
 export class BookService {
@@ -67,7 +68,8 @@ export class BookService {
     };
   }
 
-  readBook(): Book {
+  readBook(param: ReadBookInputDto): Book {
+    console.log(param);
     // TODO input받아서 실제 Book DB에서 데이터 가져오도록 수정 필요
     // 테스트용으로 book 셋팅
     return {
