@@ -15,6 +15,8 @@ import {
   SearchBookInputDto,
   SearchBookOutputDto,
 } from './types/dtos/search.book.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BookService {
@@ -22,6 +24,8 @@ export class BookService {
     private readonly configService: ConfigService,
     @Inject(NAVER_BOOK_SEARCH_API_URL)
     private readonly naverBookSearchApiUrl: string,
+    @InjectRepository(Book)
+    private readonly bookRepository: Repository<Book>,
   ) {}
 
   async searchBook(param: SearchBookInputDto): Promise<SearchBookOutputDto> {
@@ -66,11 +70,18 @@ export class BookService {
     };
   }
 
-  readBook(param: ReadBookInputDto): Book {
+  async readBook(param: ReadBookInputDto): Promise<Book> {
     console.log(param);
+
+    await this.bookRepository.findOne({ where: param });
+
     // TODO input받아서 실제 Book DB에서 데이터 가져오도록 수정 필요
+    const now = new Date();
     // 테스트용으로 book 셋팅
     return {
+      id: 1,
+      createdAt: now,
+      updatedAt: now,
       title: 'test_title',
       link: 'test_link',
       image: 'test_image',
@@ -79,7 +90,7 @@ export class BookService {
       publisher: 'test_publisher',
       isbn: 999,
       description: 'test_description',
-      pubdate: new Date(),
+      pubdate: now,
     };
   }
 }

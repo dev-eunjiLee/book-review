@@ -1,4 +1,6 @@
-import { PickType } from '@nestjs/graphql';
+import { PartialType, PickType } from '@nestjs/graphql';
 import { Book } from '../entities/book.entity';
 
-export class ReadBookInputDto extends PickType(Book, ['title']) {}
+export class ReadBookInputDto extends PartialType(
+  PickType(Book, ['title', 'id']),
+) {}
