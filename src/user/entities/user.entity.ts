@@ -15,7 +15,7 @@ export class User extends CommonEntity {
   @Column({ unique: true })
   @Field(() => String)
   @IsString()
-  id: string;
+  email: string;
 
   @Column()
   @Field(() => String)
