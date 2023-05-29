@@ -1,13 +1,20 @@
 import {
   CreateDateColumn,
   DeleteDateColumn,
+  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
-export class CommonEntity {
+@InputType({ isAbstract: true })
+@ObjectType({ isAbstract: true })
+@Entity()
+export abstract class CommonEntity {
+  @Field(() => Number)
+  @PrimaryGeneratedColumn()
+  id: number;
+
   @Field(() => Date)
   @CreateDateColumn()
   createdAt: Date;
@@ -15,10 +22,6 @@ export class CommonEntity {
   @Field(() => Date)
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @Field(() => Number)
-  @PrimaryGeneratedColumn()
-  tableId: number;
 
   @Field(() => Date, { nullable: true })
   @DeleteDateColumn()

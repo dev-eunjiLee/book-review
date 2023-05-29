@@ -1,8 +1,11 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { CommonEntity } from 'src/common/common.entity';
+import { Entity } from 'typeorm';
 
 @InputType('BookInputType')
 @ObjectType()
-export class Book {
+@Entity('book')
+export class Book extends CommonEntity {
   @Field(() => String)
   title: string; // 책 제목
   @Field(() => String)
