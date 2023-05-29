@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user/entities/user.entity';
 import { ReviewModule } from './review/review.module';
 import { BookModule } from './book/book.module';
+import { Book } from './book/types/entities/book.entity';
 
 @Module({
   imports: [
@@ -40,7 +41,7 @@ import { BookModule } from './book/book.module';
         password: configService.get<string>('MYSQL_PASSWORD'),
         database: configService.get<string>('MYSQL_DB'),
         synchronize: true,
-        entities: [User],
+        entities: [User, Book],
       }),
     }),
     // * service
