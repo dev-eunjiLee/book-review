@@ -10,6 +10,7 @@ import { User } from './user/entities/user.entity';
 import { ReviewModule } from './review/review.module';
 import { BookModule } from './book/book.module';
 import { Book } from './book/types/entities/book.entity';
+import { ChatGptModule } from './util/chatgpt/chatgpt.module';
 
 @Module({
   imports: [
@@ -44,6 +45,8 @@ import { Book } from './book/types/entities/book.entity';
         entities: [User, Book],
       }),
     }),
+    // * chatGPT
+    ChatGptModule.forRoot({ apiKey: process.env.CHATGPT_API_KEY as string }),
     // * service
     UserModule,
     ReviewModule,
