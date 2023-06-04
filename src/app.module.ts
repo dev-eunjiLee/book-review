@@ -46,7 +46,12 @@ import { ChatGptModule } from './util/chatgpt/chatgpt.module';
       }),
     }),
     // * chatGPT
-    ChatGptModule.forRoot({ apiKey: process.env.CHATGPT_API_KEY as string }),
+    ChatGptModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        apiKey: configService.get<string>('CHATGPT_API_KEY') as string,
+      }),
+    }),
     // * service
     UserModule,
     ReviewModule,
