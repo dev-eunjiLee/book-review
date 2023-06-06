@@ -14,8 +14,8 @@ export class ChatGPTService {
     @Inject(CHATGPT_MODULE_CONFIG)
     private readonly config: any,
   ) {
-    console.log(config);
-    console.log(openai);
+    console.log('🚀🚀🚀🚀', config);
+    console.log('🚀🚀🚀🚀', openai);
   }
 
   createChatGPTMEssage(
