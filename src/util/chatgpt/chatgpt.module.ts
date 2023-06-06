@@ -26,9 +26,9 @@ export class ChatGptModule {
           },
           inject: [CHATGPT_MODULE_CONFIG],
         },
-
         ChatGPTService,
       ],
+      exports: [ChatGPTService],
     };
   }
 }
