@@ -17,11 +17,13 @@ import {
 } from './types/dtos/search.book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ChatGPTService } from 'src/util/chatgpt/chatgpt.service';
 
 @Injectable()
 export class BookService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly chatGPTService: ChatGPTService,
     @Inject(NAVER_BOOK_SEARCH_API_URL)
     private readonly naverBookSearchApiUrl: string,
     @InjectRepository(Book)
@@ -92,5 +94,13 @@ export class BookService {
       description: 'test_description',
       pubdate: now,
     };
+  }
+
+  // * 책 추천(chatGPT) 함수
+  async recommendBookByChatGPT() {
+    const msg = this.chatGPTService.createChatGPTMEssage({
+      bookList: ['해리포터'],
+    });
+    console.log(msg);
   }
 }
