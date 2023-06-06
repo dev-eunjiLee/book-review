@@ -1,9 +1,10 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { Configuration, OpenAIApi } from 'openai';
 import { ChatGPTService } from './chatgpt.service';
 import { CHATGPT_MODULE_CONFIG, OPENAI } from './token';
 import { TypeChatGPTConfig } from './types';
 
+@Global()
 @Module({})
 export class ChatGPTModule {
   static forRootAsync(options: {
