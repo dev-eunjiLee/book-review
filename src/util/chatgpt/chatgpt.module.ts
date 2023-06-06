@@ -5,13 +5,13 @@ import { CHATGPT_MODULE_CONFIG, OPENAI } from './token';
 import { TypeChatGPTConfig } from './types';
 
 @Module({})
-export class ChatGptModule {
+export class ChatGPTModule {
   static forRootAsync(options: {
     inject: Array<any>;
     useFactory: any;
   }): DynamicModule {
     return {
-      module: ChatGptModule,
+      module: ChatGPTModule,
       providers: [
         {
           provide: CHATGPT_MODULE_CONFIG,
