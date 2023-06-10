@@ -18,6 +18,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ChatGPTService } from 'src/util/chatgpt/chatgpt.service';
+import { RecommendBookByChagGPTInputDto } from './types/dtos/recommend.book.dto';
 
 @Injectable()
 export class BookService {
@@ -97,10 +98,11 @@ export class BookService {
   }
 
   // * 책 추천(chatGPT) 함수
-  async recommendBookByChatGPT() {
+  async recommendBookByChatGPT(param: RecommendBookByChagGPTInputDto) {
     const msg = this.chatGPTService.createChatGPTMEssage({
-      bookList: ['해리포터'],
+      bookList: param.bookList,
     });
-    console.log(msg);
+    const requestResult = await this.chatGPTService.request(msg);
+    return JSON.stringify(requestResult);
   }
 }
