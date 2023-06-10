@@ -31,45 +31,42 @@ export class ChatGPTService {
       {
         role: 'user',
         content: `
-          I want to get book list you recommend by my book list.
-          My book list is "해리포터", "셜록홈즈", "용의자 X의 헌신".
-          My requirements like this.
-          1. Your answer keys must be "title", "author", "publishing company", "ISBN code in Korea"
-          2. Your answer values must be Korean
+          Please recommend books that I would like using the book list I gave you.
+          My book list is ${input.bookList}.
+          Return the answer as a JSON object with key "title", "author", "publishing_company", "ISBN_code" and value in Korean.
+          And I want to except served my book list
         `,
       },
     ];
   }
 
-  async request(prompt: string): Promise<any> {
-    console.log(prompt);
-    let result;
+  async request(message: ChatGPTRequestMessageType[]): Promise<any> {
+    console.log(message);
+    let content: string;
     try {
-      result = await this.openai.createChatCompletion({
+      const result = await this.openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are book specialist',
-          },
-          {
-            role: 'user',
-            content: `
-              I want to get book list you recommend by my book list.
-              My book list is "해리포터", "셜록홈즈", "용의자 X의 헌신".
-              My requirements like this.
-              1. Your answer keys must be "title", "author", "publishing company", "ISBN code in Korea"
-              2. Your answer values must be Korean
-            `,
-          },
-        ],
+        messages: message,
       });
-      const content = result?.data?.choices?.[0]?.message?.content;
-      console.log(content);
+      content = result?.data?.choices?.[0]?.message?.content as string;
     } catch (e) {
       console.error(e);
+      return e;
     }
-    console.log(result);
-    return result;
+    // result.data.choices[0].message.content;
+    console.log(content);
+
+    const pattern = /{[^{}]+}/g;
+    const bookList:
+      | {
+          title: string;
+          author: string;
+          publishing_company: string;
+          ISBN_code: string;
+        }[]
+      | undefined = content.match(pattern)?.map((per) => {
+      return JSON.parse(per);
+    });
+    return bookList;
   }
 }
