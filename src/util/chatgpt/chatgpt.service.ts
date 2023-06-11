@@ -51,22 +51,9 @@ export class ChatGPTService {
       content = result?.data?.choices?.[0]?.message?.content as string;
     } catch (e) {
       console.error(e);
-      return e;
+      throw e;
     }
-    // result.data.choices[0].message.content;
-    console.log(content);
 
-    const pattern = /{[^{}]+}/g;
-    const bookList:
-      | {
-          title: string;
-          author: string;
-          publishing_company: string;
-          ISBN_code: string;
-        }[]
-      | undefined = content.match(pattern)?.map((per) => {
-      return JSON.parse(per);
-    });
-    return bookList;
+    return content;
   }
 }

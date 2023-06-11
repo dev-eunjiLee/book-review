@@ -98,11 +98,21 @@ export class BookService {
   }
 
   // * 책 추천(chatGPT) 함수
-  async recommendBookByChatGPT(param: RecommendBookByChagGPTInputDto) {
+  async recommendBookByChatGPT(
+    param: RecommendBookByChagGPTInputDto,
+  ): Promise<Array<Book>> {
     const msg = this.chatGPTService.createChatGPTMEssage({
       bookList: param.bookList,
     });
-    const requestResult = await this.chatGPTService.request(msg);
-    return JSON.stringify(requestResult);
+    const content = await this.chatGPTService.request(msg);
+
+    const pattern = /{[^{}]+}/g;
+    const bookList: Book[] = content.match(pattern)?.map((per: string) => {
+      const tmp = JSON.parse(per);
+      tmp['publisher'] = tmp['publishing_company'];
+      tmp['isbn'] = tmp['ISBN_code'];
+      return tmp;
+    });
+    return bookList;
   }
 }
