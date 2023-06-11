@@ -5,6 +5,7 @@ import {
   SearchBookInputDto,
   SearchBookOutputDto,
 } from './types/dtos/search.book.dto';
+import { Book } from './types/entities/book.entity';
 
 @Resolver()
 export class BookResolver {
@@ -16,10 +17,10 @@ export class BookResolver {
     return await this.bookService.searchBook(param);
   }
 
-  @Query(() => String)
+  @Query(() => [Book])
   async recommendBookByChagGPT(
     @Args('input') param: RecommendBookByChagGPTInputDto,
-  ) {
+  ): Promise<Array<Book>> {
     return await this.bookService.recommendBookByChatGPT(param);
   }
 }
