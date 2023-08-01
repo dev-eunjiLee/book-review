@@ -19,10 +19,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ChatGPTService } from 'src/util/chatgpt/chatgpt.service';
 import { RecommendBookByChagGPTInputDto } from './types/dtos/recommend.book.dto';
-import { METHOD_IO_LOGGER } from 'nestjs-io-logger';
 
 @Injectable()
-@METHOD_IO_LOGGER()
 export class BookService {
   constructor(
     private readonly configService: ConfigService,
